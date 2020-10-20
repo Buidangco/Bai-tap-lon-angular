@@ -21,16 +21,22 @@
           <span class="icon-bar"></span>
         </button>
         <!-- Collect the nav links, forms, and other content for toggling -->
-        <!-- <div
+        <div
           class="collapse navbar-collapse offset"
           id="navbarSupportedContent"
         >
           <ul class="nav navbar-nav menu_nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="index.html">Home</a>
+            <li class="nav-item dropdown">
+              <a class="nav-link" data-toggle="dropdown" routerLink="/login">
+                <button>Login</button>
+              </a>
+                <a (click)="logout()" style="cursor: pointer;">
+                  <i class="ace-icon fa fa-power-off"></i>
+                 Đăng xuất
+                </a>
             </li>
           </ul>
-        </div> -->
+        </div>
       </div>
     </nav>
   </div>
@@ -143,9 +149,11 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let row of mang;let i=index">
-                    <th scope="row">{{i}}</th>
-                    <td>{{row.name_Subject}}</td>
-                    <td>{{row.total_scores}}</td>
+                    <ng-container *ngIf="row.iD_Student==user">
+                      <th scope="row">{{i}}</th>
+                      <td>{{row.name_Subject}}</td>
+                      <td>{{row.total_scores}}</td>
+                    </ng-container>
                   </tr>
                 </tbody>
               </table>

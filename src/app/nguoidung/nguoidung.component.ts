@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ScoreService} from '../score.service';
 import{khoahoc,hocky} from '../model/score'
+import { AuthenticationService } from '../lib/authentication.service';
 
 @Component({
   selector: 'app-nguoidung',
@@ -11,7 +12,7 @@ export class NguoidungComponent implements OnInit {
   khoahoc1:khoahoc[];
   hocky1:hocky[];
   mang:any;
-  constructor(private scoreService:ScoreService) { }
+  constructor(private scoreService:ScoreService,private authenticationService: AuthenticationService) { }
 
   getkhoahoc():void{
     this.scoreService.getkhoahoc().subscribe(
@@ -33,9 +34,13 @@ export class NguoidungComponent implements OnInit {
       console.log(this.mang);
     })
   }
+  user:any;
   ngOnInit(): void {
+    this.user=this.authenticationService.userValue.username;
     this.getkhoahoc();
     this.gethocky();
   }
-
+  logout() {
+    this.authenticationService.logout();
+  }
 }

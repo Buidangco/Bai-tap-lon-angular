@@ -13,7 +13,11 @@ export class Score{
   iD_plan:string;
   iD_Semester:string;
   diemhoclai1:number;
-  // diemhoclai2:number;
+  diemhoclai2:number;
+  name_update:string;
+  date_updat:Date;
+  name_create:string;
+  date_create:string
 }
 
 export class diemtheolop{
@@ -119,7 +123,10 @@ export class themdiemsv{
   summary_score:number;
   total_score:number;
   practice:number;
-  diemhoclai1:number
+  diemhoclai1:number;
+  diemhoclai2:number;
+  name_create:string;
+  date_create:string;
 }
 
 export class monhocutehy{

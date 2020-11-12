@@ -1,0 +1,341 @@
+<!--
+<div class="content-wrapper">
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>DataTables</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">DataTables</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="form-group">
+    <input type="text" class="form-control" placeholder="Search Here" [(ngModel)]="searchText">
+</div>
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <button type="button" class="btn btn-block btn-primary" style="    width: 5em;" data-toggle="modal" data-target="#modal-secondary">Thêm</button>
+            </div>
+            <div class="card-body">
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                <tr style="text-align: center;">
+                  <th>Stt</th>
+                  <th style="width: 10em;">Mã sinh viên</th>
+                  <th>Họ tên</th>
+                  <th style="width: 6em;">Gới tính</th>
+                  <th>Ngày sinh</th>
+                  <th style="width: 10em;">Điểm chuyên cần</th>
+                  <th style="width: 10em;">Điểm thực hành</th>
+                  <th style="width: 10em;">Điểm quá trình</th>
+                  <th style="width: 10em;">Điểm kết thúc</th>
+                  <th style="width: 10em;">Điểm tổng</th>
+                  <th style="width: 10em;">Môn học</th>
+                  <th colspan="2" style="text-align: center;">Chức năng</th>
+                </tr>
+                </thead>
+                <tbody *ngFor="let row of scores | filter:searchText; let i = index;">
+                <tr>
+                  <td>{{i}}</td>
+                  <td>{{row.iD_Student}}</td>
+                  <td>{{row.name_Student}}</td>
+                  <td *ngIf="row.sex_Student=='1'">Nam</td>
+                  <td *ngIf="row.sex_Student=='0'">Nữ</td>
+                  <td> {{row.date_student}}</td>
+                  <td> {{row.attendance}}</td>
+                  <td> {{row.exercise_score}}</td>
+                  <td> {{row.medium_score}}</td>
+                  <td>{{row.summary_score}}</td>
+                  <td>{{row.total_scores}}</td>
+                  <td> {{row.name_Subject}}</td>
+                  <td><a class="btn btn-app">
+                    <i class="fas fa-edit"></i> Edit
+                  </a></td>
+                  <td><a class="btn btn-app">
+                    <i class="fas fa-trash-alt"></i> Delete
+                  </a></td>
+                </tr>
+
+                </tbody>
+                <tfoot>
+                <tr>
+                  <th>Mã sinh viên</th>
+                  <th>Họ tên sinh viên</th>
+                  <th>Gới tính</th>
+                  <th>Ngày sinh</th>
+                  <th>Điểm chuyên cần</th>
+                  <th>Điểm thực hành</th>
+                  <th>Điểm quá trình</th>
+                  <th>Điểm kết thúc</th>
+                  <td>Điểm tổng</td>
+                  <th>Môn học</th>
+                  <th colspan="2" style="text-align: center;">Chức năng</th>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div> -->
+<div class="content-wrapper">
+  <section class="content">
+<div class="card">
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Danh sách sinh viên học lại</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">DataTables</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+<div class="p-mb-3">
+  <p-button type="button"  icon="pi pi-chevron-left" (click)="prev()" [disabled]="isFirstPage()" styleClass="p-button-text"></p-button>
+  <p-button type="button" icon="pi pi-refresh" (click)="reset()" styleClass="p-button-text"></p-button>
+  <p-button type="button"  icon="pi pi-chevron-right" (click)="next()" [disabled]="isLastPage()" styleClass="p-button-text"></p-button>
+</div>
+  <!-- <div class="card-header">
+    <button type="button" class="btn btn-block btn-primary" style="    width: 5em;" data-toggle="modal" data-target="#modal-secondary">Thêm</button>
+  </div> -->
+  <p-table #dt [value]="diemtheolop1 | filter:searchText1" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [(first)]="first"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[5,25,50]" >
+    <ng-template pTemplate="caption">
+      <div class="p-d-flex" style="display: flex;">
+          <button type="button" style="    height: 3em;width: 5em;" pButton pRipple icon="pi pi-file-o" (click)="dt.exportCSV()" class="p-mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+          <!-- <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success p-mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button> -->
+          <button type="button"  style="    height: 3em;width: 5em;" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()" class="p-button-warning p-mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+          <button type="button" style="    height: 3em;width: 5em;" pButton pRipple icon="pi pi-filter" (click)="dt.exportCSV({selectionOnly:true})" class="p-button-info p-ml-auto" pTooltip="Selection Only" tooltipPosition="bottom"></button>
+            <input type="text" style="    width: 40em;padding: 1.5em;margin-left: 0.7em;" style="    width: 40em;padding: 1.5em;margin-left: 0.7em;" class="form-control" placeholder="Search Here" [(ngModel)]="searchText1">
+            <button type="button" style="    width: 5em;padding: 0.5em;margin-left: 38em;" class="btn btn-danger" data-toggle="modal" data-target="#modal-secondary">Thêm</button>
+      </div>
+  </ng-template>
+
+    <ng-template pTemplate="header">
+        <tr>
+          <th style="font-weight: bold;">Mã sinh viên</th>
+          <th style="font-weight: bold;">Họ tên sinh viên</th>
+          <th style="font-weight: bold;">Môn học</th>
+          <th style="font-weight: bold;">Gới tính</th>
+          <th style="font-weight: bold;">Ngày sinh</th>
+          <th style="font-weight: bold;">Điểm chuyên cần</th>
+          <th style="font-weight: bold;">Điểm bài tập</th>
+          <th style="font-weight: bold;">Điểm quá trình</th>
+          <th style="font-weight: bold;">Điểm kết thúc</th>
+          <th style="font-weight: bold;">Điểm tổng</th>
+          <th colspan="2" style="text-align: center;font-weight: bold;">Chức năng</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body"  let-row >
+      <!-- <ng-container *ngIf="row.iD_class==id"> -->
+        <tr>
+          <td>{{row.iD_Student}}</td>
+          <td>{{row.name_Student}}</td>
+          <td> {{row.name_Subject}}</td>
+          <td *ngIf="row.sex_Student=='1'">Nam</td>
+          <td *ngIf="row.sex_Student=='0'">Nữ</td>
+          <td> {{row.date_student}}</td>
+          <td> {{row.attendance}}</td>
+          <td> {{row.exercise_score}}</td>
+          <td> {{row.medium_score}}</td>
+          <td>{{row.summary_score}}</td>
+          <td style="font-weight: bold;">{{row.total_scores}}</td>
+          <!-- <td> {{row.conduct_score}}</td> -->
+          <td><a class="btn btn-app">
+            <i class="fas fa-edit"></i> Edit
+          </a></td>
+          <td><a class="btn btn-app">
+            <i class="fas fa-trash-alt"></i> Delete
+          </a></td>
+        </tr>
+      <!-- </ng-container> -->
+  </ng-template>
+
+  </p-table>
+</div>
+</section>
+</div>
+<div class="modal fade show" id="modal-secondary" style="display: none; padding-right: 6em;" aria-modal="true">
+  <div class="modal-dialog">
+    <div class="modal-content bg-secondary" style="     background: #FC9928 !important;width: 267% !important;
+    margin-left: -25em;">
+      <div class="card card-warning">
+        <div class="card-header" style="background: #FC9928 !important;">
+          <h3 class="card-title">General Elements</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+          <form role="form">
+            <div class="row">
+              <label style="color: black;">Mã sinh viên</label>
+                  <input type="text" (click)="check()" #masv1 class="form-control" placeholder="Mã ...">
+            </div>
+            <ng-container *ngFor="let row of danhsach" >
+              <ng-container *ngIf="row.iD_Student==masv1.value " >
+            <div class="row">
+              <div class="col-sm-6">
+
+                <div class="form-group">
+                  <label style="color: black;">Mã Điểm</label>
+                  <input type="text" #madiem class="form-control"  placeholder="Mã ..." required>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label style="color: black;">Họ tên</label>
+                  <input type="text" #Hoten class="form-control" disabled value="{{row.name_Student}}" placeholder="Tên ..." >
+                  <!-- disabled="" -->
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <!-- textarea -->
+                <div class="form-group">
+                  <label style="color: black;">Địa chỉ</label>
+                  <textarea class="form-control" disabled #diachi rows="3" value="{{row.village_Studen}}" placeholder="Địa chỉ ..."></textarea>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label style="color: black;">Giới tính</label>
+                  <div class="form-group">
+                    <mat-radio-group name="{{row.village_Studen}}" ngModel required #gender="ngModel" >
+                      <label class="form-check-label" style="color: black;">Nam</label>
+                      <mat-radio-button value="1" style="    margin-left: 0.3em;"></mat-radio-button><br>
+                      <label  class="form-check-label" style="color: black;">Nữ</label>
+                      <mat-radio-button value="0" style="    margin-left: 1em;"></mat-radio-button>
+                    </mat-radio-group>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label style="color: black;">Kế Hoạch</label>
+                  <select class="form-control" #kehoach (click)="check1()">
+                    <option  *ngFor="let row1 of scores1"  value="{{row1.id_plan}}" >{{row1.name_plan}}</option>
+                  </select>
+                  <!-- <input type="text" #Hoten class="form-control" value="{{row.name_plan}}" placeholder="Tên ..." > -->
+                </div>
+              </div>
+              <ng-container *ngFor="let row1 of laykehoach1">
+                <ng-container *ngIf="row1.iD_plan==kehoach.value ">
+                  <div class="col-sm-4" >
+                    <!-- text input -->
+                    <div class="form-group" >
+                      <label style="color: black;">Học Kỳ</label>
+                      <select class="form-control" #hocky >
+                          <option  value="{{row1.iD_Semester}}">{{row1.name_Semester}}</option>
+                      </select>
+                      <!-- <input type="text" #Hoten class="form-control" value="{{row.name_Semester}}" placeholder="Tên ..." > -->
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <!-- text input -->
+                    <div class="form-group">
+                      <label style="color: black;">Môn học</label>
+                      <select class="form-control"  #Mon>
+                          <option  value="{{row1.name_Subject}}">{{row1.name_Subject}}</option>
+                      </select>
+                      <!-- <input type="text" #Hoten class="form-control" value="{{row.name_Semester}}" placeholder="Tên ..." > -->
+                    </div>
+                  </div>
+                </ng-container>
+              </ng-container>
+
+                    </div>
+            <div class="row">
+              <div class="col-sm-3">
+                <!-- text input -->
+                <div class="form-group">
+                  <label style="color: black;">Điểm chuyên cần</label>
+                  <input type="text" #chuyencan min=0 max=10 class="form-control"  placeholder="Điểm chuyên cần ..." >
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label style="color: black;">Điểm bài tập</label>
+                  <input type="text" #thuchanh min=0 max=10 class="form-control"  placeholder="Điểm thực hành ..." >
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label style="color: black;">Điểm thực hành</label>
+                  <input type="text" #baitap min=0 max=10 class="form-control"   placeholder="Điểm quá trình ..." >
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label style="color: black;">Điểm kết thúc</label>
+                  <input type="text" #ketthuc min=0 max=10 class="form-control"   placeholder="Điểm kết thúc ..." >
+                </div>
+              </div>
+            </div>
+            <div class="row">
+
+              <div class="col-sm-6">
+
+              <div class="form-group row">
+                <label style="color: black;">Ngày sinh</label>
+                <div class="col-10">
+                  <input class="form-control" disabled #ngaysinh type="datetime-local" value="{{row.date_student}}" id="example-datetime-local-input">
+                </div>
+              </div>
+              </div>
+            </div>
+            <!-- <div class="row">
+              <div class="col-sm-12">
+
+                <div class="form-group">
+                  <label style="color: black;">Hạnh kiểm</label>
+                  <select class="form-control" disabled #hanhkiem>
+                      <option value="Tốt">Tốt</option>
+                      <option value="Khá">Tốt</option>
+                      <option value="Yếu">Tốt</option>
+                  </select>
+
+                </div>
+              </div>
+            </div> -->
+            <div class="row">
+              <div class="modal-footer justify-content-between">
+                <button style="color: black;" type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+                <button style="color: black;float: right;" type="button" class="btn btn-outline-light" (click)="Themdiem(masv1.value,madiem.value,Hoten.value,
+                gender.value,hocky.value,kehoach.value,chuyencan.value,thuchanh.value,ketthuc.value,ngaysinh.value,Mon.value,baitap.value);masv1.value='';madiem.value='';Hoten.value='';
+                gender.value='';hocky.value='';kehoach.value='';chuyencan.value='';thuchanh.value='';quatrinh.value='';ketthuc.value='';hanhkiem.value='';ngaysinh.value='';Mon.value=''">Save changes</button>
+                <!-- <button class="btn btn-outline-danger" color="primary" mat-raised-button type="submit" [disabled]="!loginForm.valid">Thêm SV</button> -->
+              </div>
+            </div>
+          </ng-container>
+            <!-- input states -->
+          </ng-container>
+          </form>
+        </div>
+        <!-- /.card-body -->
+      </div>
+
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>

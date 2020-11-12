@@ -12,6 +12,7 @@ const httpOptions={
 @Injectable({
   providedIn: 'root'
 })
+
 export class ScoreService {
   private moviesURL="https://localhost:44388/api/ScoresClasses/diem";
   private moviesURLKH="https://localhost:44388/api/ScoresClasses/kehoach";
@@ -34,6 +35,9 @@ export class ScoreService {
   private diemtheolopurl="https://localhost:44388/api/ScoresClasses/diemtheolop";
 
   private diemhoclai1="https://localhost:44388/api/ScoresClasses/updatediem";
+  private diemhoclai2="https://localhost:44388/api/ScoresClasses/updatediem2";
+  private truotmonlan1="https://localhost:44388/api/ScoresClasses/tksvtruotmon1";
+  private truotmonlan2="https://localhost:44388/api/ScoresClasses/tksvtruotmon2";
 
   getsinhvien(): Observable<Score[]>{
     return this.http.get<Score[]>(this.moviesURL).pipe(
@@ -99,6 +103,21 @@ export class ScoreService {
     )
   }
 
+  getsvtruotlan1(): Observable<svtruot[]>{
+    return this.http.get<svtruot[]>(this.truotmonlan1).pipe(
+      tap(receivedMovies=>console.log(`receivedMovies =${JSON.stringify(receivedMovies)}`)),
+      catchError(error=>of([]))
+    )
+  }
+
+  getsvtruotlan2(): Observable<svtruot[]>{
+    debugger;
+    return this.http.get<svtruot[]>(this.truotmonlan2).pipe(
+      tap(receivedMovies=>console.log(`receivedMovies =${JSON.stringify(receivedMovies)}`)),
+      catchError(error=>of([]))
+    )
+  }
+
   getkhoahoc(): Observable<khoahoc[]>{
     return this.http.get<khoahoc[]>(this.khoahocurrl).pipe(
       tap(receivedMovies=>console.log(`receivedMovies =${JSON.stringify(receivedMovies)}`)),
@@ -152,6 +171,7 @@ export class ScoreService {
   }
   adddiemsv(newsinhvien:themdiemsv):Observable<themdiemsv>
   {
+    debugger;
     return this.http.post<themdiemsv>(this.themdiemsinhvien,newsinhvien,httpOptions).pipe(
       tap((mo:themdiemsv)=>console.log(`diem=${JSON.stringify(themdiemsv)}`)),
       catchError(error=>of(new themdiemsv()))
@@ -160,6 +180,13 @@ export class ScoreService {
 
   updatehoclai1(score:Score):Observable<any>{
     return this.http.put(this.diemhoclai1,score,httpOptions).pipe(
+     tap(updatemovie=>console.log(`update movie =${JSON.stringify(updatemovie)}`)),
+     catchError(error=>of(new Score()))
+    )
+  }
+
+  updatehoclai2(score:Score):Observable<any>{
+    return this.http.put(this.diemhoclai2,score,httpOptions).pipe(
      tap(updatemovie=>console.log(`update movie =${JSON.stringify(updatemovie)}`)),
      catchError(error=>of(new Score()))
     )

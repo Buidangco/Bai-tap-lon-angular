@@ -1,0 +1,127 @@
+<div class="content-wrapper">
+  <section class="content">
+<div class="card">
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Danh sách sinh viên học lại</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">DataTables</li>
+          </ol>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+   <div class="row">
+              <div class="col-sm-3">
+                <!-- text input -->
+                <div class="form-group">
+                  <label style="color: black;">Môn học</label>
+                  <select class="form-control"  #Mon>
+                    <option *ngFor="let row of mon" value="{{row.id_subject}}">{{row.name_subject}}</option>
+                  </select>
+                  <!-- <input type="text" #Hoten class="form-control" value="{{row.name_Semester}}" placeholder="Tên ..." > -->
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <!-- text input -->
+                <div class="form-group">
+                  <label style="color: black;">Học kỳ</label>
+                  <select class="form-control"  #hocky>
+                    <option *ngFor="let row of hocky1" value="{{row.iD_Semester}}">{{row.name_Semester}}</option>
+                  </select>
+                  <!-- <input type="text" #Hoten class="form-control" value="{{row.name_Semester}}" placeholder="Tên ..." > -->
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <!-- text input -->
+                <div class="form-group">
+                  <label style="color: black;">Khóa học</label>
+                  <select class="form-control"  #khoahoc>
+                      <option *ngFor="let row of khoahoc1" value="{{row.id_Course}}" >{{row.name_Course}}</option>
+                  </select>
+                  <!-- <input type="text" #Hoten class="form-control" value="{{row.name_Semester}}" placeholder="Tên ..." > -->
+                </div>
+              </div>
+
+              <div class="col-sm-1">
+                <!-- text input -->
+                <div class="form-group" style="    margin-top: 0.4em;">
+                  <label style="color: black;"></label>
+                    <button style="color: black;" class="btn btn-block btn-warning form-control" type="button" (click)="tim(Mon.value,hocky.value,khoahoc.value)"  >Tìm</button>
+                </div>
+              </div>
+            </div>
+  <div class="p-mb-3">
+      <p-button type="button" icon="pi pi-chevron-left" (click)="prev()" [disabled]="isFirstPage()" styleClass="p-button-text"></p-button>
+      <p-button type="button" icon="pi pi-refresh" (click)="reset()" styleClass="p-button-text"></p-button>
+      <p-button type="button" icon="pi pi-chevron-right" (click)="next()" [disabled]="isLastPage()" styleClass="p-button-text"></p-button>
+  </div>
+<div class="row">
+<div class="col-2">
+  <button style="color: black;" class="btn btn-block btn-warning form-control" type="button" (click)="chonlan1()"  >Học lại lần 1</button>
+</div>
+<div class="col-2">
+  <button style="color: black;" class="btn btn-block btn-warning form-control" type="button" (click)="chonlan2()"  >Học lại lần 2</button>
+</div>
+</div>
+  <p-table [value]="svtruotmon" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [(first)]="first"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]" *ngIf="show==true">
+      <ng-template pTemplate="header">
+          <tr>
+              <th>Mã sinh viên</th>
+              <th>Mã lớp</th>
+              <th>Họ tên</th>
+              <th>Giới tính</th>
+              <th>Ngày sinh</th>
+              <th>Môn học</th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body"  let-customers>
+          <tr>
+              <td>{{customers.iD_Student}}</td>
+              <td>{{customers.iD_class}}</td>
+              <td>{{customers.name_student}}</td>
+              <td>{{customers.sex_student}}</td>
+              <td>{{customers.date_student}}</td>
+              <td>{{customers.name_Subject}}</td>
+          </tr>
+    </ng-template>
+  </p-table>
+  <p-table [value]="mang" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [(first)]="first"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]" *ngIf="show==false">
+  <ng-template pTemplate="header">
+      <tr>
+          <th>Mã sinh viên</th>
+          <th>Mã lớp</th>
+          <th>Họ tên</th>
+          <th>Giới tính</th>
+          <th>Ngày sinh</th>
+          <th>Môn học</th>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-row>
+    <tr>
+        <td>{{row.iD_Student}}</td>
+        <td>{{row.iD_class}}</td>
+        <td>{{row.name_student}}</td>
+        <td>{{row.sex_student}}</td>
+        <td>{{row.date_student}}</td>
+        <td>{{row.name_Subject}}</td>
+    </tr>
+</ng-template>
+</p-table>
+</div>
+</section>
+</div>
+<div *ngIf="!show">
+  <ul *ngFor="let row of mang">
+    <li>{{row.iD_Student}}</li>
+    <li>{{row.iD_class}}</li>
+  </ul>
+</div>
+
